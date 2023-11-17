@@ -11,9 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "shelljs": "^0.8.5",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@types/node": "^20.9.1"
+    "@types/node": "^20.9.1",
+    "@types/shelljs": "^0.8.15"
   }
 }
