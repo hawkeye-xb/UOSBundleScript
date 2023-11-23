@@ -21,7 +21,9 @@ type DesktopInfoType = {
 
 export type TemplateDirType = {
   appId: string;
-  svgPath?: string;
+  packageName?: string;
+  output?: string;
+  svgPath: string;
   desktopEntryFileContent: string;
   desktopInfoFileContent?: DesktopInfoType;
   unpackedDir: string;

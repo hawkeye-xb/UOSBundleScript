@@ -23,18 +23,20 @@ import { rules, install } from './replaceFilesInfo';
 
 const TemplateDirTypeDefault: TemplateDirType = {
   appId: 'com.example.app',
+  // packageName: 'com.example.app', // <name>_<version>
   svgPath: '',
   desktopEntryFileContent: `[Desktop Entry]`,
   unpackedDir: '',
   // desktopInfoFileContent: `{}`,
+  output: '',
 }
 
 function generateTemplateDir(options: TemplateDirType = TemplateDirTypeDefault): string {
-  const { appId, svgPath, desktopEntryFileContent, desktopInfoFileContent } = options;
+  const { appId, svgPath, desktopEntryFileContent, desktopInfoFileContent, packageName } = options;
 
   const currentDir = process.cwd();
-  // todo: template 要换成最后包的名称
-  const rootDir = path.join(currentDir, 'template', `opt/apps/${appId}`);
+  const packageDirName = packageName || `${appId}_1.0.0`;
+  const rootDir = path.join(currentDir, packageDirName, `opt/apps/${appId}`);
   const entriesDir = `${rootDir}/entries/applications`;
   const iconsDir = `${entriesDir}/icons/hicolor/scalable/apps`;
   const filesDir = `${rootDir}/files`;
@@ -155,14 +157,21 @@ export async function buildUOS(options: BuildUOSType) {
 // 打包
 function pack(rootDir: string, controlFileInfo: controlFileType) {
   console.info('start pack');
-  shell.exec(`cd ${rootDir} && USER=root dh_make --createorig -s -n -y`)
+  
+  const dhMakeRes = shell.exec(`cd ${rootDir} && USER=root dh_make --createorig -s -n -y`)
+  if (dhMakeRes.code !== 0) {
+    throw new Error('dh_make failed');
+  }
+  // todo: log dirs
   
   const debianDir = path.join(rootDir, 'debian');
   console.info('debianDir: ', debianDir);
 
-  shell.exec(`cd ${debianDir} && rm *.ex *.EX`)
-	shell.exec(`cd ${debianDir} && rm -rf *.docs README README.* `)
-	shell.exec(`cd ${debianDir} && rm control rules`)
+  const rmRes = shell.exec(`cd ${debianDir} && rm -rf *.docs README README.* *.ex *.EX control rules`)
+  if (rmRes.code !== 0) {
+    throw new Error('rm failed');
+  }
+
 	// shell.exec(`cd ${debianDir} && ls -al`)
 
   // 3. 替换文件
