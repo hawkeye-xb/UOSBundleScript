@@ -129,7 +129,11 @@ export async function buildUOS(options: BuildUOSType) {
     options.beforePack();
   }
 
-  pack(rootDir, controlFile);
+  try {
+    pack(rootDir, controlFile);
+  } catch (error) {
+    console.warn('Pack error: ', error);
+  }
 
   if (options.afterPack) {
     options.afterPack();
@@ -140,7 +144,8 @@ export async function buildUOS(options: BuildUOSType) {
     options.beforeRemoveTemplateDir();
   }
 
-  removeTemplateDir(rootDir);
+  // console.info('removeTemplateDir: ', rootDir);
+  // removeTemplateDir(rootDir);
 
   if (options.afterRemoveTemplateDir) {
     options.afterRemoveTemplateDir();
