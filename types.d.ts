@@ -12,15 +12,15 @@ type DesktopInfoPermissionType = {
 }
 
 type DesktopInfoType = {
-  appleId: string;
+  appId: string;
   name: string;
   version: string;
   description: string;
-  permissions: DesktopInfoPermissionType;
+  permissions?: DesktopInfoPermissionType;
 }
 
 export type TemplateDirType = {
-  appleId: string;
+  appId: string;
   svgPath?: string;
   desktopEntryFileContent: string;
   desktopInfoFileContent?: DesktopInfoType;
@@ -34,7 +34,7 @@ export type DesktopEntryType = {
   Type: string;
   Exec: string;
   Icon: string;
-  MimeTypes: string;
+  MimeTypes?: string;
   // Comment: string;
   // Terminal: string;
   // StartupNotify: string;
@@ -42,7 +42,7 @@ export type DesktopEntryType = {
 
 export type BuildUOSType = {
   svgPath: string; // svg 文件路径, app icon
-  appleId: string; // app id
+  appId: string; // app id
   unpackedDir: string; // 解压后的文件夹路径
   DesktopInfo: DesktopInfoType;
   DesktopEntry: DesktopEntryType;

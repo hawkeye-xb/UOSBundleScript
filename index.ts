@@ -22,7 +22,7 @@ import { rules, install } from './replaceFilesInfo';
  */
 
 const TemplateDirTypeDefault: TemplateDirType = {
-  appleId: 'com.example.app',
+  appId: 'com.example.app',
   svgPath: '',
   desktopEntryFileContent: `[Desktop Entry]`,
   unpackedDir: '',
@@ -30,16 +30,16 @@ const TemplateDirTypeDefault: TemplateDirType = {
 }
 
 function generateTemplateDir(options: TemplateDirType = TemplateDirTypeDefault): string {
-  const { appleId, svgPath, desktopEntryFileContent, desktopInfoFileContent } = options;
+  const { appId, svgPath, desktopEntryFileContent, desktopInfoFileContent } = options;
 
   const currentDir = process.cwd();
   // todo: template 要换成最后包的名称
-  const rootDir = path.join(currentDir, 'template', `opt/apps/${appleId}`);
+  const rootDir = path.join(currentDir, 'template', `opt/apps/${appId}`);
   const entriesDir = `${rootDir}/entries/applications`;
   const iconsDir = `${entriesDir}/icons/hicolor/scalable/apps`;
   const filesDir = `${rootDir}/files`;
 
-  const desktopEntryFile = `${entriesDir}/${appleId}.desktop`;
+  const desktopEntryFile = `${entriesDir}/${appId}.desktop`;
   const desktopInfoFile = `${rootDir}/info`;
 
   const dirs = [rootDir, entriesDir, iconsDir, filesDir];
@@ -61,8 +61,8 @@ function generateTemplateDir(options: TemplateDirType = TemplateDirTypeDefault):
     fs.writeFileSync(desktopInfoFile, JSON.stringify(desktopInfoFileContent || {}, null, 2));
   }
   
-  // 如果有 svgPath，就复制 svg 文件到 iconsDir，并且重名为 ${appleId}.svg，如果没有 svgPath，就创建空的 svg 文件
-  const svgFile = `${iconsDir}/${appleId}.svg`;
+  // 如果有 svgPath，就复制 svg 文件到 iconsDir，并且重名为 ${appId}.svg，如果没有 svgPath，就创建空的 svg 文件
+  const svgFile = `${iconsDir}/${appId}.svg`;
   if (!fs.existsSync(svgFile)) {
     console.info('Creating file: ', svgFile);
     if (svgPath) {
@@ -105,7 +105,7 @@ MimeTypes=${MimeTypes}
 }
 
 export async function buildUOS(options: BuildUOSType) {
-  const { svgPath, appleId, unpackedDir, DesktopEntry, DesktopInfo, controlFile } = options;
+  const { svgPath, appId, unpackedDir, DesktopEntry, DesktopInfo, controlFile } = options;
   
   // 1. 创建模板目录
   if (options.beforeGenerateTemplateDir) {
@@ -113,7 +113,7 @@ export async function buildUOS(options: BuildUOSType) {
   }
 
   const rootDir = generateTemplateDir({
-    appleId,
+    appId,
     svgPath,
     unpackedDir,
     desktopEntryFileContent: desktopEntryToString(DesktopEntry),
