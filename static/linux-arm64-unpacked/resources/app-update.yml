@@ -1,0 +1,4 @@
+owner: '690591397'
+repo: electron-godan
+provider: github
+updaterCacheDirName: electron-godan-updater

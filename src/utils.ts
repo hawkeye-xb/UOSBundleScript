@@ -42,9 +42,9 @@ export function writeFileBeforeRemoveSync(file: string, data: string | NodeJS.Ar
 
 export function exec(command: string): ShellString {
   const res = shell.exec(command)
-  if (res.code !== 0) {
-    throw new Error('shell failed' + res?.stderr);
-  }
+  // if (res.code !== 0) {
+  //   throw new Error('shell failed' + res?.stderr);
+  // }
 
   return res;
 }

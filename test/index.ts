@@ -9,9 +9,9 @@ async function run(){
   const execFileName = 'electron-godan';
 
   await buildUOS({
-    svgPath: join(currentDir, 'src', 'icon.svg'),
+    svgPath: join(currentDir, 'static', 'icon.svg'),
     appId,
-    unpackedDir: join(currentDir, 'src', 'linux-arm64-unpacked'),
+    unpackedDir: join(currentDir, 'static', 'linux-arm64-unpacked'),
     DesktopInfo: {
       appId,
       name,
