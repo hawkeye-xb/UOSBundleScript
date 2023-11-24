@@ -2,4 +2,5 @@
 /dist/
 /output/
 /template/
+/src/*unpacked/
 package-lock.json
