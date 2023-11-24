@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import shell from 'shelljs';
 import { BuildUOSType, TemplateDirType, DesktopEntryType, controlFileType } from './types';
-import { rules, install } from './replaceFilesInfo';
+import { rules, install } from './src/replaceFilesInfo';
 import { controlFileToString, desktopEntryToString, exec, writeFileBeforeRemoveSync } from './src/utils';
 
 /**

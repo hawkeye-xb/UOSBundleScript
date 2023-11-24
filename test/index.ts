@@ -10,11 +10,11 @@ async function run(){
   const name = 'buildUos';
   const execFileName = 'electron-godan';
   const version = '1.0.0';
+  const output = join(currentDir, 'output');
 
   await buildUOS({
-    output: join(process.cwd(), 'output'),
+    output, appId,
     svgPath: join(currentDir, 'static', 'icon.svg'),
-    appId,
     unpackedDir: join(currentDir, 'static', 'linux-arm64-unpacked'),
     DesktopInfo: {
       appId, name, version,
@@ -46,13 +46,13 @@ async function run(){
   });
 
   shell.exec('ls -al ./output');
-  checkDebFileExists(appId, version, 'amd64');  
+  checkDebFileExists(output, appId, version, 'arm64');  
 }
 
 run();
 
-function checkDebFileExists(appId: string, version: string, arch: string): void {
-  const debFilePath = `./output/${appId}_${version}_${arch}.deb`;
+function checkDebFileExists(output: string, appId: string, version: string, arch: string): void {
+  const debFilePath = `${output}/${appId}_${version}_${arch}.deb`;
 
   if (fs.existsSync(debFilePath)) {
     console.log(`File ${debFilePath} exists.`);

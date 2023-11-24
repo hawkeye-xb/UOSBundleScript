@@ -1,8 +1,11 @@
 {
-  "name": "electron-build-uos-script",
-  "version": "1.0.0",
+  "name": "electron-build-uos-script-template",
+  "version": "0.1.2",
   "description": "",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "files": [
+    "dist/src", "package.json", "types.d.ts", "readme.md"
+  ],
   "scripts": {
     "test": "npm run build && node dist/test/index.js",
     "build": "tsc && cp -r static dist/test",
@@ -11,10 +14,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "shelljs": "^0.8.5",
-    "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "shelljs": "^0.8.5",
+    "typescript": "^5.2.2",
     "@types/node": "^20.9.1",
     "@types/shelljs": "^0.8.15"
   }
