@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "npm run build && node dist/test/index.js",
-    "build": "tsc && cp -r src dist/test",
+    "build": "tsc && cp -r static dist/test",
     "start": "npm run build && node dist/index.js"
   },
   "author": "",
