@@ -78,15 +78,12 @@ function removeTemplateDir(rootDir: string) {
 }
 
 export async function buildUOS(options: BuildUOSType) {
-  const { svgPath, appId, unpackedDir, DesktopEntry, DesktopInfo, controlFile } = options;
+  const { output, svgPath, appId, unpackedDir, DesktopEntry, DesktopInfo, controlFile } = options;
 
   options?.beforeGenerateTemplateDir?.();
 
   const rootDir = generateTemplateDir({
-    appId,
-    svgPath,
-    output: path.join(process.cwd(), 'output'),
-    unpackedDir,
+    appId, svgPath, output, unpackedDir,
     desktopEntryFileContent: desktopEntryToString(DesktopEntry),
     desktopInfoFileContent: DesktopInfo,
   });
