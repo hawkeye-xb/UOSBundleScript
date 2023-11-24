@@ -32,19 +32,20 @@ const TemplateDirTypeDefault: TemplateDirType = {
 }
 
 function generateTemplateDir(options: TemplateDirType = TemplateDirTypeDefault): string {
-  const { appId, svgPath, desktopEntryFileContent, desktopInfoFileContent, packageName } = options;
+  const { appId, svgPath, desktopEntryFileContent, desktopInfoFileContent, packageName, output } = options;
 
-  const currentDir = process.cwd();
-  const packageDirName = packageName || `${appId}_1.0.0`;
-  const rootDir = path.join(currentDir, packageDirName, `opt/apps/${appId}`);
-  const entriesDir = `${rootDir}/entries/applications`;
+  const currentDir = output || process.cwd();
+  const packageDirName = packageName || `${appId}-1.0.0`;
+  const packageDir = path.join(currentDir, packageDirName);
+  const desktopDir = path.join(packageDir, `opt/apps/${appId}`);
+  const entriesDir = `${desktopDir}/entries/applications`;
   const iconsDir = `${entriesDir}/icons/hicolor/scalable/apps`;
-  const filesDir = `${rootDir}/files`;
+  const filesDir = `${desktopDir}/files`;
 
   const desktopEntryFile = `${entriesDir}/${appId}.desktop`;
-  const desktopInfoFile = `${rootDir}/info`;
+  const desktopInfoFile = `${desktopDir}/info`;
 
-  const dirs = [rootDir, entriesDir, iconsDir, filesDir];
+  const dirs = [desktopDir, entriesDir, iconsDir, filesDir];
 
   dirs.forEach((dir) => {
     if (!fs.existsSync(dir)) {
@@ -83,7 +84,7 @@ function generateTemplateDir(options: TemplateDirType = TemplateDirTypeDefault):
   shell.cp('-R', options.unpackedDir, filesDir);
 
   // 返回当前模板目录
-  return rootDir;
+  return packageDir;
 }
 function removeTemplateDir(rootDir: string) {
   // const currentDir = process.cwd();
@@ -102,7 +103,7 @@ GenericName=${GenericName}
 Type=${Type}
 Exec=${Exec}
 Icon=${Icon}
-MimeTypes=${MimeTypes}
+${MimeTypes ? `MimeType=${MimeTypes}` : ''}
 `;
 }
 
@@ -156,16 +157,21 @@ export async function buildUOS(options: BuildUOSType) {
 
 // 打包
 function pack(rootDir: string, controlFileInfo: controlFileType) {
-  console.info('start pack');
+  console.info('start pack', rootDir);
   
   const dhMakeRes = shell.exec(`cd ${rootDir} && USER=root dh_make --createorig -s -n -y`)
   if (dhMakeRes.code !== 0) {
-    throw new Error('dh_make failed');
+    throw new Error('dh_make failed' + dhMakeRes?.stderr);
   }
   // todo: log dirs
   
   const debianDir = path.join(rootDir, 'debian');
   console.info('debianDir: ', debianDir);
+
+  const lsRes = shell.exec(`cd ${debianDir} && ls -al`)
+  if (lsRes.code !== 0) {
+    throw new Error('ls failed');
+  }
 
   const rmRes = shell.exec(`cd ${debianDir} && rm -rf *.docs README README.* *.ex *.EX control rules`)
   if (rmRes.code !== 0) {
@@ -198,20 +204,34 @@ function pack(rootDir: string, controlFileInfo: controlFileType) {
     fs.rmSync(installFile);
   }
   fs.writeFileSync(installFile, install);
+  
+  // 生成 compat 文件在Debian下，内容13
+  const compatFile = path.join(debianDir, 'compat');
+  console.info('compatFile: ', compatFile);
+  if (fs.existsSync(compatFile)) {
+    fs.rmSync(compatFile);
+  }
+  fs.writeFileSync(compatFile, '13');
 
-  // 4. 打包
-  shell.exec(`cd ${rootDir} && fakeroot dpkg-buildpackage -b -us -uc`);
+  // 4. 打包 
+  // fakeroot 有更新，不一定需要，具体可能得看环境版本
+  // https://github.com/frankaemika/franka_ros/issues/101 
+  // https://frankaemika.github.io/docs/installation_linux.html
+  // 导致需要多一个 compat 文件 https://askubuntu.com/questions/834239/debian-control-doesnt-list-any-binary-package
+  shell.exec(`cd ${rootDir} && dpkg-buildpackage -b -us -uc`);
 }
 
 function controlFileToString(options: controlFileType) {
-  const { Source, Section, Priority, Maintainer, BuildDepends, StandardsVersion, Homepage, Package, Architecture } = options;
+  const { Source, Section, Priority, Maintainer, StandardsVersion, Homepage, Package, Architecture, VcsBrowser, VcsGit } = options;
   return `Source: ${Source}
 Section: ${Section}
 Priority: ${Priority}
 Maintainer: ${Maintainer}
-Build-Depends: ${BuildDepends}
 Standards-Version: ${StandardsVersion}
 Homepage: ${Homepage}
+#Vcs-Browser: ${VcsBrowser}
+#Vcs-Git: ${VcsGit}
+
 Package: ${Package}
 Architecture: ${Architecture}
 Description: ${Package}

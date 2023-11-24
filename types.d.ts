@@ -63,9 +63,11 @@ export type controlFileType = {
   Section: string;
   Priority: string;
   Maintainer: string;
-  BuildDepends: string;
+  // BuildDepends: string;
   StandardsVersion: string;
   Homepage: string;
+  VcsBrowser: string;
+  VcsGit: string; 
   Package: string;
   Architecture: string;
   // Depends: string;

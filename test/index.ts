@@ -11,7 +11,7 @@ async function run(){
   await buildUOS({
     svgPath: join(currentDir, 'src', 'icon.svg'),
     appId,
-    unpackedDir: join(currentDir, 'linux-arm64-unpacked'),
+    unpackedDir: join(currentDir, 'src', 'linux-arm64-unpacked'),
     DesktopInfo: {
       appId,
       name,
@@ -32,9 +32,11 @@ async function run(){
       Section: 'dev',
       Priority: 'optional',
       Maintainer: 'godaner<690591397@qq.com>',
-      BuildDepends: 'debhelper (>= 11)',
+      // BuildDepends: 'debhelper (>= 11)',
       StandardsVersion: '4.1.3',
       Homepage: 'https://github.com/690591397',
+      VcsBrowser: 'https://salsa.debian.org/debian/com.electron.builduos',
+      VcsGit: 'https://salsa.debian.org/debian/com.electron.builduos.git',
       Package: appId,
       Architecture: 'any',
       Description: 'desc',
