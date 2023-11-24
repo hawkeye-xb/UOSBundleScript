@@ -54,6 +54,7 @@ export type BuildUOSType = {
   afterGenerateTemplateDir?: (templatePath: string) => void;
   beforePack?: () => void;
   afterPack?: () => void;
+  removeTemplateDir?: boolean;
   beforeRemoveTemplateDir?: () => void;
   afterRemoveTemplateDir?: () => void;
 }
