@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build Debian package
+      - name: Install environment
         run: |
           sudo apt-get update
           sudo apt-get install -y dh-make fakeroot dpkg-dev

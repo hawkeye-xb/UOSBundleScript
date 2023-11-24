@@ -43,6 +43,7 @@ export type DesktopEntryType = {
 }
 
 export type BuildUOSType = {
+  output?: string; // 输出目录
   svgPath: string; // svg 文件路径, app icon
   appId: string; // app id
   unpackedDir: string; // 解压后的文件夹路径
@@ -54,6 +55,7 @@ export type BuildUOSType = {
   afterGenerateTemplateDir?: (templatePath: string) => void;
   beforePack?: () => void;
   afterPack?: () => void;
+  removeTemplateDir?: boolean;
   beforeRemoveTemplateDir?: () => void;
   afterRemoveTemplateDir?: () => void;
 }

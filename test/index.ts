@@ -1,4 +1,6 @@
+import fs from 'fs';
 import { join } from "path";
+import shell from 'shelljs';
 import { buildUOS } from "..";
 
 async function run(){
@@ -7,15 +9,15 @@ async function run(){
   const appId = 'com.electron.builduos';
   const name = 'buildUos';
   const execFileName = 'electron-godan';
+  const version = '1.0.0';
 
   await buildUOS({
-    svgPath: join(currentDir, 'src', 'icon.svg'),
+    output: join(process.cwd(), 'output'),
+    svgPath: join(currentDir, 'static', 'icon.svg'),
     appId,
-    unpackedDir: join(currentDir, 'src', 'linux-arm64-unpacked'),
+    unpackedDir: join(currentDir, 'static', 'linux-arm64-unpacked'),
     DesktopInfo: {
-      appId,
-      name,
-      version: '1.0.0',
+      appId, name, version,
       description: 'desc',
     },
     DesktopEntry: {
@@ -42,6 +44,20 @@ async function run(){
       Description: 'desc',
     }
   });
+
+  shell.exec('ls -al ./output');
+  checkDebFileExists(appId, version, 'amd64');  
 }
 
 run();
+
+function checkDebFileExists(appId: string, version: string, arch: string): void {
+  const debFilePath = `./output/${appId}_${version}_${arch}.deb`;
+
+  if (fs.existsSync(debFilePath)) {
+    console.log(`File ${debFilePath} exists.`);
+  } else {
+    console.error(`File ${debFilePath} does not exist.`);
+    process.exit(1);
+  }
+}

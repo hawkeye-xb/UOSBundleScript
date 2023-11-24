@@ -9,7 +9,7 @@
 1. 克隆项目到本地
 1. 安装依赖：`npm install`
 1. 搭建构建环境，目前使用 Ubuntu:latest（docker 启动将当前项目共享既可）
-1. 使用 electron 构建 Linux，产出的 unpacked 移动到src下
+1. 使用 electron 构建 Linux，产出的 unpacked 移动到 static 下
 1. 修改 test 文件的入参
 1. `npm run test`
 
