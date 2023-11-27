@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { join } from "path";
 import shell from 'shelljs';
-import { buildUOS } from "..";
+import { buildUOS } from "../index";
 
 async function run(){
   const currentDir = process.cwd();
@@ -16,6 +16,7 @@ async function run(){
     output, appId,
     svgPath: join(currentDir, 'static', 'icon.svg'),
     unpackedDir: join(currentDir, 'static', 'linux-arm64-unpacked'),
+    removeTemplateDir: false,
     DesktopInfo: {
       appId, name, version,
       description: 'desc',

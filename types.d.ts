@@ -37,9 +37,10 @@ export type DesktopEntryType = {
   Exec: string;
   Icon: string;
   MimeTypes?: string;
-  // Comment: string;
-  // Terminal: string;
-  // StartupNotify: string;
+  Comment?: string;
+  Terminal?: string;
+  StartupNotify?: string;
+  [key: string]: string | undefined;
 }
 
 export type BuildUOSType = {
@@ -74,4 +75,5 @@ export type controlFileType = {
   Architecture: string;
   // Depends: string;
   Description: string;
+  [key: string]: string | undefined;
 }

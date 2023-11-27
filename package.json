@@ -1,5 +1,5 @@
 {
-  "name": "electron-build-uos-script-template",
+  "name": "uos-bundle-script",
   "version": "0.1.2",
   "description": "",
   "main": "dist/index.js",
