@@ -32,7 +32,10 @@ jobs:
       - name: Build package
         run: npm run build
       
-      - name: Publish to npm
-        run: npm publish
+      - name: Publish to the npm registry
+        uses: primer/publish@3.0.0
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        with:
+          default_branch: 'main'
