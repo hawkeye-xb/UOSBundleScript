@@ -1,4 +1,5 @@
 import fs from 'fs';
+import os from 'os';
 import { join } from "path";
 import shell from 'shelljs';
 import { buildUOS } from "../index";
@@ -47,7 +48,8 @@ async function run(){
   });
 
   shell.exec('ls -al ./output');
-  checkDebFileExists(output, appId, version, 'arm64');  
+  console.info('env arch :', os.arch());
+  checkDebFileExists(output, appId, version, 'amd64');  // github action used amd64 ?
 }
 
 run();
