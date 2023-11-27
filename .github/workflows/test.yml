@@ -1,0 +1,41 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dh-make fakeroot dpkg-dev
+
+      - name: Run tests
+        run: npm run test
+      
+      # - name: Build package
+      #   run: npm run build
+      
+      # - name: Publish to the npm registry
+      #   uses: primer/publish@3.0.0
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      #   with:
+      #     default_branch: 'main'
