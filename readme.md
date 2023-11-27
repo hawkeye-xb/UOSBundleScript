@@ -2,7 +2,7 @@
 
 ## 介绍
 
-本项目旨在提供一种简便、高效的方式，将 Electron 应用构建为适用于 UOS 系统的可执行文件。目标是丰富和优化国产操作系统的应用生态。详细的打包方法，参考[提供的教程](https://github.com/hawkeye-xb/UOSBundleScript/blob/feature_optimize_function/%E5%A6%82%E4%BD%95%E6%9E%84%E5%BB%BA%E7%AC%A6%E5%90%88%E8%A6%81%E6%B1%82%E7%9A%84%20UOS%20%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E5%8C%85.md)。
+本项目旨在提供一种简便、高效的方式，将 Electron 应用构建为适用于 UOS 系统的可执行文件。目标是丰富和优化国产操作系统的应用生态。详细的打包方法，参考[提供的教程](https://github.com/hawkeye-xb/UOSBundleScript/blob/main/%E5%A6%82%E4%BD%95%E6%9E%84%E5%BB%BA%E7%AC%A6%E5%90%88%E8%A6%81%E6%B1%82%E7%9A%84%20UOS%20%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E5%8C%85.md)。
 
 ## 脚本说明
 
