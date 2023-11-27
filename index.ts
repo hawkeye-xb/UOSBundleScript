@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import shell from 'shelljs';
-import { BuildUOSType, TemplateDirType, DesktopEntryType, controlFileType } from './types';
+import { BuildUOSType, TemplateDirType, controlFileType } from './types';
 import { rules, install } from './src/replaceFilesInfo';
 import { controlFileToString, desktopEntryToString, exec, writeFileBeforeRemoveSync } from './src/utils';
 
@@ -23,11 +23,11 @@ import { controlFileToString, desktopEntryToString, exec, writeFileBeforeRemoveS
  */
 
 function generateTemplateDir(options: TemplateDirType): string {
-  const { appId, svgPath, desktopEntryFileContent, desktopInfoFileContent, packageName, output } = options;
+  const { appId, svgPath, desktopEntryFileContent, desktopInfoFileContent, packageName, output, version } = options;
 
   const currentDir = output || process.cwd(); // root
 
-  const packageDirName = packageName || `${appId}-1.0.0`;
+  const packageDirName = packageName || `${appId}-${version}`;
   const packageDir = path.join(currentDir, packageDirName); // root/${com.example.app-1.0.0}
 
   const desktopDir = path.join(packageDir, `opt/apps/${appId}`); // root/${com.example.app-1.0.0}/opt/apps/${com.example.app}
@@ -78,12 +78,12 @@ function removeTemplateDir(rootDir: string) {
 }
 
 export async function buildUOS(options: BuildUOSType) {
-  const { output, svgPath, appId, unpackedDir, DesktopEntry, DesktopInfo, controlFile } = options;
+  const { output, svgPath, appId, unpackedDir, DesktopEntry, DesktopInfo, controlFile, version } = options;
 
   options?.beforeGenerateTemplateDir?.();
 
   const rootDir = generateTemplateDir({
-    appId, svgPath, output, unpackedDir,
+    appId, svgPath, output, unpackedDir, version,
     desktopEntryFileContent: desktopEntryToString(DesktopEntry),
     desktopInfoFileContent: DesktopInfo,
   });

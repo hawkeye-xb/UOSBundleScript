@@ -17,10 +17,12 @@ type DesktopInfoType = {
   version: string;
   description: string;
   permissions?: DesktopInfoPermissionType;
+  [key: string]: string | undefined;
 }
 
 export type TemplateDirType = {
   appId: string;
+  version: string;
   packageName?: string;
   output?: string;
   svgPath: string;
@@ -44,6 +46,7 @@ export type DesktopEntryType = {
 }
 
 export type BuildUOSType = {
+  version: string; // 版本号
   output?: string; // 输出目录
   svgPath: string; // svg 文件路径, app icon
   appId: string; // app id

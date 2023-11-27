@@ -18,6 +18,7 @@ async function run(){
     svgPath: join(currentDir, 'static', 'icon.svg'),
     unpackedDir: join(currentDir, 'static', 'linux-arm64-unpacked'),
     removeTemplateDir: false,
+    version,
     DesktopInfo: {
       appId, name, version,
       description: 'desc',
