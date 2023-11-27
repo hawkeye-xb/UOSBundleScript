@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "shelljs": "^0.8.5",
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "typescript": "^5.2.2",
