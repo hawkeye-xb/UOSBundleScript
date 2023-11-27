@@ -2,7 +2,7 @@
 
 ## 介绍
 
-这是一个关于 Electron 构建 UOS 脚本的项目。
+本项目旨在提供一种简便、高效的方式，将 Electron 应用构建为适用于 UOS 系统的可执行文件。目标是丰富和优化国产操作系统的应用生态。详细的打包方法，参考[提供的教程](https://github.com/hawkeye-xb/UOSBundleScript/blob/feature_optimize_function/%E5%A6%82%E4%BD%95%E6%9E%84%E5%BB%BA%E7%AC%A6%E5%90%88%E8%A6%81%E6%B1%82%E7%9A%84%20UOS%20%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E5%8C%85.md)。
 
 ## 脚本说明
 
@@ -116,7 +116,7 @@ await buildUOS({
 1. 克隆项目到本地
 1. 安装依赖：`npm install`
 1. 搭建构建环境，目前使用 Ubuntu:latest（docker 启动将当前项目共享既可）
-1. 使用 electron 构建 Linux，产出的 unpacked 移动到 static 下
+1. 使用 electron 构建 Linux，产出的 unpacked 移动到 static 下（当前执行文件是hello world）
 1. 修改 test 文件的入参
 1. `npm run test`
 
@@ -125,6 +125,11 @@ await buildUOS({
 
 欢迎提交问题和改进的请求。
 
+
 ## 许可证
 
 该项目基于 [MIT 许可证](LICENSE)。
+
+---- 
+
+项目和文档中使用了部分统信UOS官网、技术支持人员提供的内容。
