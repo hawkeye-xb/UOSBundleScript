@@ -4,8 +4,8 @@ import { ShellString } from "shelljs";
 import shell from 'shelljs';
 
 export function controlFileToString(options: controlFileType) {
-  const { Source, Section, Priority, Maintainer, StandardsVersion, Homepage, Package, Architecture, VcsBrowser, VcsGit } = options;
-  return `Source: ${Source}
+  const { Source, Section, Priority, Maintainer, StandardsVersion, Homepage, Package, Architecture, VcsBrowser, VcsGit, Description } = options;
+  let result = `Source: ${Source}
 Section: ${Section}
 Priority: ${Priority}
 Maintainer: ${Maintainer}
@@ -16,21 +16,26 @@ Homepage: ${Homepage}
 
 Package: ${Package}
 Architecture: ${Architecture}
-Description: ${Package}
+Description: ${Description}
 `;
+
+  for (const [key, value] of Object.entries(options)) {
+    if (!['Source', 'Section', 'Priority', 'Maintainer', 'StandardsVersion', 'Homepage', 'Package', 'Architecture', 'VcsBrowser', 'VcsGit', 'Description'].includes(key)) {
+      result += `${key}: ${value}\n`;
+    }
+  }
+
+  return result;
 }
 
 export function desktopEntryToString(options: DesktopEntryType) {
-  const { Categories, Name, GenericName, Type, Exec, Icon, MimeTypes } = options;
-  return `[Desktop Entry]
-Categories=${Categories}
-Name=${Name}
-GenericName=${GenericName}
-Type=${Type}
-Exec=${Exec}
-Icon=${Icon}
-${MimeTypes ? `MimeType=${MimeTypes}` : ''}
-`;
+  let result = '[Desktop Entry]\n';
+  for (const [key, value] of Object.entries(options)) {
+    if (value !== undefined) {
+      result += `${key}=${value}\n`;
+    }
+  }
+  return result;
 }
 
 export function writeFileBeforeRemoveSync(file: string, data: string | NodeJS.ArrayBufferView, options?: fs.WriteFileOptions | undefined): void {
