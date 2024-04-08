@@ -33,7 +33,7 @@ function generateTemplateDir(options: TemplateDirType): string {
   const desktopDir = path.join(packageDir, `opt/apps/${appId}`); // root/${com.example.app-1.0.0}/opt/apps/${com.example.app}
 
   const entriesApplicationsDir = `${desktopDir}/entries/applications`; // root/${com.example.app-1.0.0}/opt/apps/${com.example.app}/entries/applications`;
-  const iconsDir = `${entriesApplicationsDir}/icons/hicolor/scalable/apps`; // root/${com.example.app-1.0.0}/opt/apps/${com.example.app}/entries/applications/icons/hicolor/scalable/apps`;
+  const iconsDir = `${desktopDir}/entries/icons/hicolor/scalable/apps`; // root/${com.example.app-1.0.0}/opt/apps/${com.example.app}/entries/applications/icons/hicolor/scalable/apps`;
   const filesDir = `${desktopDir}/files`;
 
   const desktopEntryFile = `${entriesApplicationsDir}/${appId}.desktop`;
