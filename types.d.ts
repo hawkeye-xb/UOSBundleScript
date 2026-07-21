@@ -46,11 +46,11 @@ export type DesktopEntryType = {
 }
 
 export type BuildUOSType = {
-  version: string; // 版本号
-  output?: string; // 输出目录
-  svgPath: string; // svg 文件路径, app icon
+  version: string; // version number
+  output?: string; // output directory
+  svgPath: string; // path to the SVG file (app icon)
   appId: string; // app id
-  unpackedDir: string; // 解压后的文件夹路径
+  unpackedDir: string; // path to the unpacked directory
   DesktopInfo: DesktopInfoType;
   DesktopEntry: DesktopEntryType;
   controlFile: controlFileType;

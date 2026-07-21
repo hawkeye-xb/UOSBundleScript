@@ -55,19 +55,19 @@ function generateTemplateDir(options: TemplateDirType): string {
     fs.writeFileSync(desktopInfoFile, JSON.stringify(desktopInfoFileContent || {}, null, 2));
   }
   
-  // 如果有 svgPath，就复制 svg 文件到 iconsDir，并且重名为 ${appId}.svg，如果没有 svgPath，就创建空的 svg 文件
+  // If svgPath is provided, copy the SVG file into iconsDir as ${appId}.svg
   const svgFile = `${iconsDir}/${appId}.svg`;
   if (!fs.existsSync(svgFile)) {
     fs.copyFileSync(svgPath, svgFile);
   }
 
-  // unpackedDir 复制并且替换files目录，目录名保留
+  // Copy unpackedDir into the files directory (replacing it), keeping the directory name
   if (fs.existsSync(filesDir)) {
     fs.rmSync(filesDir, { recursive: true });
   }
   shell.cp('-R', options.unpackedDir, filesDir);
 
-  // 返回当前模板目录
+  // Return the current template directory
   return packageDir;
 }
 function removeTemplateDir(rootDir: string) {
@@ -105,7 +105,7 @@ export async function buildUOS(options: BuildUOSType) {
   options?.afterRemoveTemplateDir?.();
 }
 
-// 打包
+// Pack
 function pack(rootDir: string, controlFileInfo: controlFileType) {
   const debianDir = path.join(rootDir, 'debian');
   console.info('start pack, rootDir: ', rootDir, ' debainDir: ', debianDir);

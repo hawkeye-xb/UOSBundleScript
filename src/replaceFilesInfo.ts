@@ -1,7 +1,7 @@
-// install 文件
+// install file
 export const install = `opt/ /`;
 
-// rules 文件
+// rules file
 export const rules = `#!/usr/bin/make -f
 # See debhelper(7) (uncomment to enable)
 # output every command that modifies files on the build system.
@@ -25,15 +25,15 @@ override_dh_auto_build:
 
 override_dh_shlibdeps:
 
-override_dh_strip:                 # 不去除符号文件和调试信息 （strip 操作）
+override_dh_strip:                 # do not strip symbols and debug info (strip operation)
 
-override_dh_strip_nondeterminism:  # 不去除多余文本信息
+override_dh_strip_nondeterminism:  # do not strip redundant text data
 
-override_dh_installchangelogs:     # 不包含安装修改日志
+override_dh_installchangelogs:     # do not install changelogs
 
-override_dh_installdocs:           # 不包含安装文档
+override_dh_installdocs:           # do not install documentation
 
-override_dh_md5sums:               # 不生成 MD5 校验文件
+override_dh_md5sums:               # do not generate MD5 checksums
 
 # dh_make generated override targets
 # This is example for Cmake (See https://bugs.debian.org/641051 )
@@ -41,4 +41,3 @@ override_dh_md5sums:               # 不生成 MD5 校验文件
 #	dh_auto_configure -- #	-DCMAKE_LIBRARY_PATH=$(DEB_HOST_MULTIARCH)
 
 `;
-
