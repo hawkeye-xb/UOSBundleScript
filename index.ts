@@ -23,7 +23,7 @@ import { controlFileToString, desktopEntryToString, exec, writeFileBeforeRemoveS
  */
 
 function generateTemplateDir(options: TemplateDirType): string {
-  const { appId, svgPath, desktopEntryFileContent, desktopInfoFileContent, packageName, output, version } = options;
+  const { appId, svgPath, desktopEntryFileContent, desktopInfoFileContent, packageName, output, version, replaceFilesInfo } = options;
 
   const currentDir = output || process.cwd(); // root
 
@@ -115,8 +115,8 @@ function pack(rootDir: string, controlFileInfo: controlFileType) {
   exec(`cd ${debianDir} && rm -rf *.docs README README.* *.ex *.EX control rules`)
 
   writeFileBeforeRemoveSync(path.join(debianDir, 'control'), controlFileToString(controlFileInfo));
-  writeFileBeforeRemoveSync(path.join(debianDir, 'rules'), rules);
-  writeFileBeforeRemoveSync(path.join(debianDir, 'install'), install);
+  writeFileBeforeRemoveSync(path.join(debianDir, 'rules'), replaceFilesInfo.rules || rules);
+  writeFileBeforeRemoveSync(path.join(debianDir, 'install'), replaceFilesInfo.install || install);
 
   // fakeroot may not be necessary, it might depend on the environment version
   // https://github.com/frankaemika/franka_ros/issues/101 
